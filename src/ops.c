@@ -124,8 +124,7 @@ void imfilter(double *img, double *kernel, double *img_fltr, int rows, int cols,
 * @param cols : Number of columns in image
 * @return void
 */
-void imadd(double *img_fltr_sum, double *img_fltr_crnt, int cols, int rows)
-{
+void imadd(double *img_fltr_sum, double *img_fltr_crnt, int cols, int rows){
 	int cnt = 0;
 	for (int i = 0; i < rows;i++){
 	    for (int j = 0; j < cols; j++){
@@ -135,4 +134,70 @@ void imadd(double *img_fltr_sum, double *img_fltr_crnt, int cols, int rows)
             }
         }
     }
+}
+
+/*
+* @brief Pad images for a given pad size
+* @param img : Image to be padded
+* @param pad_size : Size of padding
+* @param img+pad : Padded image
+* @param rows : Number of rows in image
+* @param cols : Number of columns in image
+* @return void
+*/
+void deconv(double *img_input, double *img_output, double *kernel, int cols, int rows, int stride){
+	int border = 1;
+	int fsize = 9;
+	int rows_pad = rows + 2 * border;
+	int cols_pad = cols + 2 * border;
+	double *img_input_padded = (double *)malloc(rows_pad * cols_pad * sizeof(double));
+	pad_image(img_input, img_input_padded, rows, cols, border);
+	
+	int rows_out_pad = rows_pad * stride;
+	int cols_out_pad = cols_pad * stride;
+	double *img_output_tmp = (double *)calloc((rows_out_pad + fsize - 1)* (cols_out_pad + fsize - 1), sizeof(double));
+	double *kernel_modif = (double *)malloc(fsize * fsize * sizeof(double));
+
+	int idx, idy;
+	for (int i = 0; i < rows_pad; i++){
+        for (int j = 0; j < cols_pad; j++)
+        {
+            int cnt_img = i*cols_pad + j;
+            idx = i*stride;
+            idy = j*stride;
+            int cnt_img_output = idx*(cols_out_pad + fsize - 1) + idy;
+            int cnt_kernel = 0;
+            for (int k_r = 0; k_r < fsize; k_r++)
+            {
+            for (int k_c = 0; k_c < fsize; k_c++)
+            {
+                cnt_kernel = k_r*fsize + k_c;
+                *(kernel_modif + cnt_kernel) = (*(kernel + cnt_kernel))*(*(img_input_padded + cnt_img));
+                *(img_output_tmp + cnt_img_output + k_c) = *(img_output_tmp + cnt_img_output + k_c) + *(kernel_modif + cnt_kernel);
+                
+            }
+            cnt_img_output = cnt_img_output + (cols_out_pad + fsize - 1);
+            }            
+        }
+    }
+
+	int rows_out = rows*stride;
+	int cols_out = cols*stride;
+
+	for (int i = 0; i < rows_out; i++){
+        for (int j = 0; j < cols_out; j++){
+            int i_tmp = i + ((fsize + 1) / 2) + stride*border - 1;
+            int j_tmp = j + ((fsize + 1) / 2) + stride*border - 1;
+            int cnt_img_out = i*cols_out + j;
+            int cnt_img_out_tmp = i_tmp*(cols_out_pad + fsize - 1) + j_tmp; // (cols-pad+fsize-1) is the number of columns in the img_out_tmp
+            *(img_output + cnt_img_out) = *(img_output_tmp + cnt_img_out_tmp);
+        }
+    }
+
+	free(img_input_padded); 
+    img_input_padded = NULL;
+	free(img_output_tmp); 
+    img_output_tmp = NULL;
+	free(kernel_modif); 
+    kernel_modif = NULL;
 }
