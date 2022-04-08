@@ -76,3 +76,40 @@ void pad_image(double *img, double *img_pad, int rows, int cols, int pad_size){
     }
 }
 
+/*
+* @brief Pad images for a given pad size
+* @param img : Image to be padded
+* @param pad_size : Size of padding
+* @param img+pad : Padded image
+* @param rows : Number of rows in image
+* @param cols : Number of columns in image
+* @return void
+*/
+void imfilter(double *img, double *kernel, double *img_fltr, int rows, int cols, int pad_size){
+    int cols_pad = cols + 2 * pad_size;
+	int rows_pad = rows + 2 * pad_size;
+	int i, j, cnt, cnt_pad, c_kernel, k1, k2;
+	double sum;
+
+	double *img_pad = (double *)malloc(rows_pad * cols_pad * sizeof(double));
+	pad_image(img, img_pad, rows, cols, pad_size);
+
+	for (i = pad_size; i < rows_pad - pad_size; i++)
+	for (j = pad_size; j < cols_pad - pad_size; j++)
+	{
+		cnt = (i - pad_size)*cols + (j - pad_size); 
+		sum = 0;
+		c_kernel = 0; 
+		for (k1 = -pad_size; k1 <= pad_size; k1++)
+		for (k2 = -pad_size; k2 <= pad_size; k2++)
+		{
+			cnt_pad = (i + k1)*cols_pad + j + k2; 
+			sum = sum + (*(img_pad + cnt_pad))*(*(kernel + c_kernel));
+			c_kernel++;
+		}
+		*(img_fltr + cnt) = sum;
+	}
+
+	free(img_pad);
+	img_pad = NULL;
+}
