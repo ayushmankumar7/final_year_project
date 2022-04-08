@@ -94,22 +94,45 @@ void imfilter(double *img, double *kernel, double *img_fltr, int rows, int cols,
 	double *img_pad = (double *)malloc(rows_pad * cols_pad * sizeof(double));
 	pad_image(img, img_pad, rows, cols, pad_size);
 
-	for (i = pad_size; i < rows_pad - pad_size; i++)
-	for (j = pad_size; j < cols_pad - pad_size; j++)
-	{
-		cnt = (i - pad_size)*cols + (j - pad_size); 
-		sum = 0;
-		c_kernel = 0; 
-		for (k1 = -pad_size; k1 <= pad_size; k1++)
-		for (k2 = -pad_size; k2 <= pad_size; k2++)
-		{
-			cnt_pad = (i + k1)*cols_pad + j + k2; 
-			sum = sum + (*(img_pad + cnt_pad))*(*(kernel + c_kernel));
-			c_kernel++;
-		}
-		*(img_fltr + cnt) = sum;
-	}
+	for (i = pad_size; i < rows_pad - pad_size; i++){
+	    for (j = pad_size; j < cols_pad - pad_size; j++){
+            cnt = (i - pad_size)*cols + (j - pad_size); 
+            sum = 0;
+            c_kernel = 0; 
+            for (k1 = -pad_size; k1 <= pad_size; k1++){
+                for (k2 = -pad_size; k2 <= pad_size; k2++){
+                    {
+                        cnt_pad = (i + k1)*cols_pad + j + k2; 
+                        sum = sum + (*(img_pad + cnt_pad))*(*(kernel + c_kernel));
+                        c_kernel++;
+                    }
+                }
+            }
+            *(img_fltr + cnt) = sum;
+        }
+    }
 
 	free(img_pad);
 	img_pad = NULL;
+}
+
+/*
+* @brief Pad images for a given pad size
+* @param img_fltr_sum : pointer to current feature map
+* @param img_fltr_crnt : pointer to the cumulutive feature map
+* @param rows : Number of rows in image
+* @param cols : Number of columns in image
+* @return void
+*/
+void imadd(double *img_fltr_sum, double *img_fltr_crnt, int cols, int rows)
+{
+	int cnt = 0;
+	for (int i = 0; i < rows;i++){
+	    for (int j = 0; j < cols; j++){
+            {
+                cnt = i*cols + j;
+                *(img_fltr_sum + cnt) = *(img_fltr_sum + cnt) + *(img_fltr_crnt + cnt);
+            }
+        }
+    }
 }
