@@ -4,7 +4,7 @@
 * @date 08-04-2022
 */
 
-#include "../includes/utils.h";
+#include "../includes/utils.h"
 
 /*
 * @brief Returns the Maximum between 2 double numbers
