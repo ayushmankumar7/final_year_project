@@ -117,7 +117,7 @@ void imfilter(double *img, double *kernel, double *img_fltr, int rows, int cols,
 }
 
 /*
-* @brief Pad images for a given pad size
+* @brief Add Feature maps
 * @param img_fltr_sum : pointer to current feature map
 * @param img_fltr_crnt : pointer to the cumulutive feature map
 * @param rows : Number of rows in image
@@ -137,12 +137,13 @@ void imadd(double *img_fltr_sum, double *img_fltr_crnt, int cols, int rows){
 }
 
 /*
-* @brief Pad images for a given pad size
-* @param img : Image to be padded
-* @param pad_size : Size of padding
-* @param img+pad : Padded image
+* @brief Deconvolution Operation
+* @param img_input : Input image
+* @param img_output : Output image
+* @param kernel : Kernel for convolution
 * @param rows : Number of rows in image
 * @param cols : Number of columns in image
+* @param stride : Size of stride
 * @return void
 */
 void deconv(double *img_input, double *img_output, double *kernel, int cols, int rows, int stride){
