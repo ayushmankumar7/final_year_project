@@ -1,0 +1,2 @@
+print([Glob("src/*.c")])
+Program("bin/output", [Glob("src/*.c")])
