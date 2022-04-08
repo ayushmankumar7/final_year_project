@@ -1,7 +1,7 @@
 #include "../includes/global.h"
 
 int main(int argc, char *argv[]){
-	printf("Welcome to my Final Year Project.\n I hope you like it.\n\n This File might take some time to execute.\n\n Good part: You can exit anytime you want using Ctrl+C");
+	printf("Welcome to my Final Year Project.\nI hope you like it.\n\nThis File might take some time to execute.\n\n Good part: You can exit anytime you want using Ctrl+C");
 	char *inFile = argv[1];
 	char *outFile = argv[2];
 
