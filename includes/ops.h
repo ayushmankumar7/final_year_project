@@ -1,3 +1,7 @@
+#pragma ONCE
+#include <stdio.h>
+#include <stdlib.h>
+
 #ifndef OPS_H
 #define OPS_H
 
