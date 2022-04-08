@@ -21,3 +21,5 @@ scons
 ```
 
 You will find a output.exe in `bin` folder. 
+
+./etc folder has the YUV video player 
