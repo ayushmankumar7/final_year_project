@@ -1,3 +1,4 @@
+![Github all releases](https://img.shields.io/github/downloads/ayushmankumar7/final_year_project/total?style=plastic)
 # B. Tech Final Year Project
 
     Convert your QCFI CCTV footage to CIF Footage using Deep Learning on YUV420 footage.
