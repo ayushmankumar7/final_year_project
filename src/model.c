@@ -13,9 +13,6 @@ void PReLU(double *img_fltr,int rows, int cols, double bias, double prelu_coeff)
 
 void FSRCNN(double *img_hr, double *img_lr, int rows, int cols, int scale)
 {
-	// General Settings
-	int num_layers = 8;
-
 	/////////// Convolution1 -------- Layer1
 	// Reading weights of first layer
 	FILE *weights_layer1_ptr;
