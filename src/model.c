@@ -1,16 +1,34 @@
 #include "../includes/model.h"
 
+/*
+* @brief Apply the PReLU Activation function
+* @param img_fltr : Layer output
+* @param rows : Number of rows in image
+* @param cols : Number of columns in image
+* @param bias : Bias value
+* @param PRelu_coeff : PReLU coeefficient
+* @return void
+*/
 void PReLU(double *img_fltr,int rows, int cols, double bias, double prelu_coeff)
 {
 	int cnt = 0;
-	for (int i = 0; i < rows;i++)
-	for (int j = 0; j < cols; j++)
-	{
-		cnt = i*cols + j;
-		*(img_fltr + cnt) = Max(*(img_fltr + cnt) + bias, 0) + prelu_coeff * Min(*(img_fltr + cnt) + bias, 0);
+	for (int i = 0; i < rows;i++){
+		for (int j = 0; j < cols; j++){
+			cnt = i*cols + j;
+			*(img_fltr + cnt) = Max(*(img_fltr + cnt) + bias, 0) + prelu_coeff * Min(*(img_fltr + cnt) + bias, 0);
+		}
 	}
 }
 
+/*
+* @brief FSRCNN Algorithm
+* @param img_hr: High Resolution Image(Output)
+* @param img_lr: Low Resolution Image(Input)
+* @param rows : Number of rows in image
+* @param cols : Number of columns in image
+* @param scale: Scale factor(In our case 2)
+* @return void
+*/
 void FSRCNN(double *img_hr, double *img_lr, int rows, int cols, int scale)
 {
 	/////////// Convolution1 -------- Layer1
@@ -24,8 +42,7 @@ void FSRCNN(double *img_hr, double *img_lr, int rows, int cols, int scale)
 
 	double weights_layer1[1400];
 	
-    for (int i = 0; i < 1400; i++)
-	{
+    for (int i = 0; i < 1400; i++){
 		fscanf(weights_layer1_ptr, "%lf", &weights_layer1[i]);
 	}
 	fclose(weights_layer1_ptr);
@@ -34,8 +51,7 @@ void FSRCNN(double *img_hr, double *img_lr, int rows, int cols, int scale)
 	biases_layer1_ptr = fopen(BIAS1, "r");
 	if (biases_layer1_ptr == NULL) { printf("Error in the reading biases of first layer\n"); };
 	double biases_layer1[56];
-	for (int i = 0; i < 56; i++)
-	{
+	for (int i = 0; i < 56; i++){
 		fscanf(biases_layer1_ptr, "%lf", &biases_layer1[i]);
 	}
 	fclose(biases_layer1_ptr);
@@ -56,11 +72,9 @@ void FSRCNN(double *img_hr, double *img_lr, int rows, int cols, int scale)
 	
 	double bias_tmp;
 
-	for (int i = 0; i < num_filters; i++)
-	{
+	for (int i = 0; i < num_filters; i++){
 		// reading corresponding weights to kernel pointer
-		for (int cnt_kernel = 0; cnt_kernel < filtersize; cnt_kernel++)
-		{
+		for (int cnt_kernel = 0; cnt_kernel < filtersize; cnt_kernel++){
 			*(kernel + cnt_kernel) = weights_layer1[cnt_weight + cnt_kernel];
 		}
 		cnt_weight = cnt_weight + filtersize;
