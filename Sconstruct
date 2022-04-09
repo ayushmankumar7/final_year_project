@@ -1,2 +1,3 @@
 print("You are building my Final Year Project (2018-2022)")
-SharedLibrary("bin/output", [Glob("src/*.c")])
+Program("bin/output", [Glob("src/*.c")])
+# SharedLibrary("test/output", [Glob("src/*.c")])
