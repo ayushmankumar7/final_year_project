@@ -8,6 +8,7 @@
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_
 
-int main(int,char **);
+__declspec(dllexport)int main(int,char **);
+__declspec(dllexport)void run(char *,char *);
 
 #endif
