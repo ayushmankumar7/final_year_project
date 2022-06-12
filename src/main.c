@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
 	int scale = 2;
 
 	//Compressed Assault Cube
-	int num = 1; //Number of frames to interpolate
+	int num = 300; //Number of frames to interpolate
 	int inCols = 176; //Width of input (downsampled) video
 	int inRows = 144; //Height of input (downsampled) video
 
@@ -256,4 +256,5 @@ void run(char *infile, char *outfile){
 	outBuf = NULL;
 	free(outBuf_tmp);
 	outBuf_tmp = NULL;
+	printf("\n COMPLETED!");
 }
