@@ -35,3 +35,5 @@ python GUI.py
 #ENJOYY
 
 ```
+# Project Completed! 
+Feel free to fork, clone, contribute to the project. Take this project further. Integrate GPU usability. Do the F you want!!! Enjoyy!!
