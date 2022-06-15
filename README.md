@@ -23,3 +23,17 @@ scons
 You will find a output.exe in `bin` folder. 
 
 ./etc folder has the YUV video player 
+
+## How to run 
+
+```
+cd bin 
+python GUI.py 
+# Click on Browser -> Go o previous folder then share/ select the YUv file
+# Click on Convert
+# You will see something.yuv in your bin folder
+#ENJOYY
+
+```
+# Project Completed! 
+Feel free to fork, clone, contribute to the project. Take this project further. Integrate GPU usability. Do the F you want!!! Enjoyy!!
