@@ -38,7 +38,9 @@ class PrettyWidget(QtWidgets.QWidget):
     def conv(self):
         # convert()
         try:
-            os.system(f"F:\OTHER_FUN_Projects/final_year_project/bin/output.exe {self.c} ../share/akiyo_qcif.yuv something.yuv")
+            os.system(f"F:\OTHER_FUN_Projects/final_year_project/bin/output.exe {self.c} OUTPUT.yuv")
+            #os.system(f"/media/ayushman/Seagate\ Expansion\ Drive/OTHER_FUN_Projects/final_year_project/bin/output {self.c} ../share/akiyo_qcif.yuv something.yuv")
+    
         except:
             print("SOmthing")
             pass
